@@ -27,41 +27,91 @@
     <!-- Bootstrap permet de gérer la structure du site web en prenant en compte sa mise en forme selon la taile de l'écran !-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
+    <!-- Style du menu déroulant (tu peux le déplacer dans css/style.css) -->
+    <style>
+        /* Bouton de menu flottant, sans bannière */
+        .menu-flottant {
+            position: fixed;
+            top: 12px;
+            right: 12px;
+            z-index: 1030;
+        }
+
+        .menu-flottant .btn-menu {
+            background-color: rgb(200, 1, 213);
+            border: none;
+            color: #fff;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+        }
+
+        .menu-flottant .btn-menu:hover,
+        .menu-flottant .btn-menu:focus,
+        .menu-flottant .show>.btn-menu {
+            background-color: rgb(165, 0, 176);
+            color: #fff;
+            box-shadow: 0 0 0 0.2rem rgba(200, 1, 213, 0.35);
+        }
+
+        .menu-flottant .btn-menu img {
+            margin-right: 6px;
+            vertical-align: -8px;
+        }
+
+        .menu-flottant .dropdown-menu {
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+            min-width: 14rem;
+            padding: 0.4rem 0;
+        }
+
+        .menu-flottant .dropdown-item {
+            padding: 0.55rem 1.2rem;
+        }
+
+        .menu-flottant .dropdown-item i {
+            width: 1.5rem;
+            text-align: center;
+            color: rgb(200, 1, 213);
+        }
+
+        .menu-flottant .dropdown-item:hover,
+        .menu-flottant .dropdown-item:focus {
+            background-color: rgba(200, 1, 213, 0.12);
+        }
+
+        .menu-flottant .dropdown-item.active {
+            background-color: rgb(200, 1, 213);
+            color: #fff;
+        }
+
+        .menu-flottant .dropdown-item.active i {
+            color: #fff;
+        }
+    </style>
+
 </head>
 
 <body>
-    <!-- La barre de navigation -->
+    <!-- Le menu déroulant -->
     <header>
-        <nav class="navbar sticky-top navbar-dark navbar-expand-lg" style="background-color: rgb(200, 1, 213);">
-            <a class="navbar-brand" href="#">
-                <img src="img/icon.PNG" width="30" height="30" alt="" loading="lazy">
-            </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-              </button>
-            <div class="collapse navbar-collapse" id="navbarText">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item"> <a class="nav-link active" href="#"><i class="fas fa-home"></i> Accueil</a>
-                    </li>
-                    <li class="nav-item"> <a class="nav-link" href="pages/Réseaux.html"><i class="fas fa-paper-plane"></i> Me contacter</a>
-                    <li>
-                    <li class="nav-item"> <a class="nav-link" href="pages/mutus.html"><i class="fas fa-paper-plane"></i> Mutus</a></li>  
-                    </li>
-                    <li class="nav-item"> <a class="nav-link" href="https://discord.gg/xaQCFtC9bv" target="-blank"><i class="fab fa-discord"></i> Discord</a>
-                    </li>
-                    <li class="nav-item"> <a class="nav-link" href="pages/sponsor.html"><i class="fas fa-handshake"></i> Notre sponsor</a>
-                    </li>
-                    <li class="nav-item"> <a class="nav-link" href="pages/projets.html"><i class="fas fa-folder-open"></i> Projets</a>
-                    </li>
-                    <li class="nav-item"> <a class="nav-link" href="https://streamelements.com/toh_ka/tip" target="-blank"><i class="fas fa-coins"></i> Faire un don</a>
-                    </li>
-                    <li class="nav-item"> <a class="nav-link" href="https://github.com/Bettyaoi/bettyaoi.github.io" target="-blank"><i class="fab fa-github"></i> Github du site</a>
-                    </li>
-                    <li class="nav-item"> <a class="nav-link" href="https://hexatm.com/MagiicalGirl/" target="-blank"><i class="fas fa-lock"></i> Se connecter</a>
-                    </li>
-                </ul>
+        <div class="dropdown menu-flottant">
+            <button class="btn btn-menu dropdown-toggle" type="button" id="menuDeroulant" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <img src="img/icon.PNG" width="24" height="24" alt="" loading="lazy"> Menu
+            </button>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="menuDeroulant">
+                <a class="dropdown-item active" href="#"><i class="fas fa-home"></i> Accueil</a>
+                <a class="dropdown-item" href="pages/Réseaux.html"><i class="fas fa-paper-plane"></i> Me contacter</a>
+                <a class="dropdown-item" href="pages/mutus.html"><i class="fas fa-paper-plane"></i> Mutus</a>
+                <a class="dropdown-item" href="https://discord.gg/xaQCFtC9bv" target="_blank" rel="noopener"><i class="fab fa-discord"></i> Discord</a>
+                <a class="dropdown-item" href="pages/sponsor.html"><i class="fas fa-handshake"></i> Notre sponsor</a>
+                <a class="dropdown-item" href="pages/projets.html"><i class="fas fa-folder-open"></i> Projets</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="https://streamelements.com/toh_ka/tip" target="_blank" rel="noopener"><i class="fas fa-coins"></i> Faire un don</a>
+                <a class="dropdown-item" href="https://github.com/Bettyaoi/bettyaoi.github.io" target="_blank" rel="noopener"><i class="fab fa-github"></i> Github du site</a>
+                <a class="dropdown-item" href="https://hexatm.com/MagiicalGirl/" target="_blank" rel="noopener"><i class="fas fa-lock"></i> Se connecter</a>
             </div>
-        </nav>
+        </div>
     </header>
 
     <!-- Le contenu-->
