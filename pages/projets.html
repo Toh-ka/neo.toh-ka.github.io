@@ -14,6 +14,68 @@
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <!-- Style du menu déroulant (identique à index.html) -->
+    <style>
+        /* Bouton de menu flottant, en haut à droite */
+        .menu-flottant {
+            position: fixed;
+            top: 12px;
+            right: 12px;
+            z-index: 1030;
+        }
+
+        .menu-flottant .btn-menu {
+            background-color: rgb(200, 1, 213);
+            border: none;
+            color: #fff;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+        }
+
+        .menu-flottant .btn-menu:hover,
+        .menu-flottant .btn-menu:focus,
+        .menu-flottant.show>.btn-menu {
+            background-color: rgb(165, 0, 176);
+            color: #fff;
+            box-shadow: 0 0 0 0.2rem rgba(200, 1, 213, 0.35);
+        }
+
+        .menu-flottant .btn-menu img {
+            margin-right: 6px;
+            vertical-align: -8px;
+        }
+
+        .menu-flottant .dropdown-menu {
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+            min-width: 14rem;
+            padding: 0.4rem 0;
+        }
+
+        .menu-flottant .dropdown-item {
+            padding: 0.55rem 1.2rem;
+        }
+
+        .menu-flottant .dropdown-item i {
+            width: 1.5rem;
+            text-align: center;
+            color: rgb(200, 1, 213);
+        }
+
+        .menu-flottant .dropdown-item:hover,
+        .menu-flottant .dropdown-item:focus {
+            background-color: rgba(200, 1, 213, 0.12);
+        }
+
+        .menu-flottant .dropdown-item.active {
+            background-color: rgb(200, 1, 213);
+            color: #fff;
+        }
+
+        .menu-flottant .dropdown-item.active i {
+            color: #fff;
+        }
+    </style>
 </head>
 
 <body>
