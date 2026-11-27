@@ -22,7 +22,7 @@
 
     <!-- Les feuilles de style-->
     <link rel="stylesheet" type="text/css" href="css/style.css">
-    <!-- Font Awesome permet de générer les petites icones pour la barre de navigation ! -->
+    <!-- Font Awesome permet de générer les petites icones pour le menu ! -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <!-- Bootstrap permet de gérer la structure du site web en prenant en compte sa mise en forme selon la taile de l'écran !-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
@@ -46,7 +46,7 @@
 
         .menu-flottant .btn-menu:hover,
         .menu-flottant .btn-menu:focus,
-        .menu-flottant .show>.btn-menu {
+        .menu-flottant.show>.btn-menu {
             background-color: rgb(165, 0, 176);
             color: #fff;
             box-shadow: 0 0 0 0.2rem rgba(200, 1, 213, 0.35);
@@ -97,7 +97,7 @@
     <header>
         <div class="dropdown menu-flottant">
             <button class="btn btn-menu dropdown-toggle" type="button" id="menuDeroulant" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <img src="img/icon.PNG" width="24" height="24" alt="" loading="lazy"> Menu
+                <img src="img/icon.PNG" width="24" height="24" alt=""> Menu
             </button>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="menuDeroulant">
                 <a class="dropdown-item active" href="#"><i class="fas fa-home"></i> Accueil</a>
@@ -117,21 +117,13 @@
     <!-- Le contenu-->
     <section>
         <h2 class="tki">Présentation</h2>
-        <p class="moi"> Je m'appelle Raphaël, je suis un adolescent passionné par l'informatique, la culture nippone et les jeux vidéo. J'ai cette passion pour la programmation depuis mes 10 ans et je compte bien réaliser mon rêve qu'est de créer un jeu vidéo à moi tout
-            seul (enfin tout seul, pas avec une base, vraiment quelque chose de A à Z). C'est à peu près tout, même si vous avez remarqué que en fait ça ne l'est pas.
-        </p>
+        <p class="moi"> Je m'appelle Raphaël, je suis un jeune passionné par l'informatique, la culture nippone et les jeux vidéo. Je pourrais parler de tout ce que j'aime, mais ça prendrait trop de temps.
     </section>
     <section>
-        <h2 class="temkoi">T'aimes quoi ?</h2>
-        <p class="jem">Alors ce que j'aime, bah y a beaucoup de choses que j'aime. Déjà j'aime manger et dormir, ça je pense que c'était évident. Mais ce que j'aime aussi c'est... Touhou Project. J'adore Touhou Project. Et le fait que ce soit une licence complètement
-            libre la rend encore plus cool. On en fait ce qu'on veut et le saint ZUN nous regardera avec un air fier (j'en fait beaucoup là non ?) D'ailleurs, mes projets comptent un fangame Touhou que j'espère pouvoir bientôt commencer mais pour le moment
-            je ne dirais rien. Mon anime/manga préféré est Kill La Kill et je pense qu'il le restera pour toujours même si j'ai une très très forte sympathie envers UQHolder!, la suite de Negima que je vous conseille d'aller voir, Negima a eu le droit
-            à son succès mais pas sa suite et c'est bien dommage je trouve.
+        <h2 class="temkoi">Mais pourquoi ce site ?</h2>
+        <p class="jem">Je sais pas. Un soir (3h du mat) je me suis dit que j'avais envie de reprendre au moins un peu ce site après avoir vu un ami faire un truc en Rust. Je sais pas si je vais maintenir et vraiment refaire ce site. Si je le fais, alors cette description ne sera plus là.
         </p>
     </section>
-
-
-
 
     <!-- Les scripts de Bootstrap pour gérer l'affichage et la structure de la page ! -->
 
