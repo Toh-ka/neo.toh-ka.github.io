@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Personnages</title>
+    <meta name="description" content="Fiches de personnages de Toh-ka">
+    <meta name="author" content="Toh-ka">
+    <meta name="theme-color" content="#E9A99F">
+    <link rel="icon" href="../img/icontab.PNG">
+
+    <!-- Feuilles de style -->
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <!-- Style du menu déroulant (identique à index.html) -->
+    <style>
+        /* Bouton de menu flottant, en haut à droite */
+        .menu-flottant {
+            position: fixed;
+            top: 12px;
+            right: 12px;
+            z-index: 1030;
+        }
+
+        .menu-flottant .btn-menu {
+            background-color: rgb(200, 1, 213);
+            border: none;
+            color: #fff;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+        }
+
+        .menu-flottant .btn-menu:hover,
+        .menu-flottant .btn-menu:focus,
+        .menu-flottant.show>.btn-menu {
+            background-color: rgb(165, 0, 176);
+            color: #fff;
+            box-shadow: 0 0 0 0.2rem rgba(200, 1, 213, 0.35);
+        }
+
+        .menu-flottant .btn-menu img {
+            margin-right: 6px;
+            vertical-align: -8px;
+        }
+
+        .menu-flottant .dropdown-menu {
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+            min-width: 14rem;
+            padding: 0.4rem 0;
+        }
+
+        .menu-flottant .dropdown-item {
+            padding: 0.55rem 1.2rem;
+        }
+
+        .menu-flottant .dropdown-item i {
+            width: 1.5rem;
+            text-align: center;
+            color: rgb(200, 1, 213);
+        }
+
+        .menu-flottant .dropdown-item:hover,
+        .menu-flottant .dropdown-item:focus {
+            background-color: rgba(200, 1, 213, 0.12);
+        }
+
+        .menu-flottant .dropdown-item.active {
+            background-color: rgb(200, 1, 213);
+            color: #fff;
+        }
+
+        .menu-flottant .dropdown-item.active i {
+            color: #fff;
+        }
+    </style>
+    <!-- Style propre à cette page -->
+    <style>
+        .persos {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
+            gap: 1rem;
+        }
+
+        .perso {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            padding: 0.9rem;
+            font: inherit;
+            text-align: center;
+            color: var(--ink, #17151a);
+            background: var(--surface, #fff);
+            border: 1px solid var(--border, #e5e2ea);
+            border-radius: var(--radius, 18px);
+            box-shadow: var(--shadow, 0 8px 24px rgba(23, 21, 26, 0.07));
+            cursor: pointer;
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+
+        .perso:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent, #b000bc);
+        }
+
+        .portrait {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            aspect-ratio: 3 / 4;
+            overflow: hidden;
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--accent, #b000bc);
+            background: var(--accent-soft, rgba(200, 1, 213, 0.1));
+            border-radius: 12px;
+        }
+
+        .portrait img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .perso-nom {
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        /* Fiche en grand */
+        dialog.fiche {
+            width: min(100% - 2rem, 40rem);
+            max-height: 90vh;
+            padding: 0;
+            overflow: auto;
+            color: var(--ink, #17151a);
+            background: var(--surface, #fff);
+            border: 1px solid var(--border, #e5e2ea);
+            border-radius: var(--radius, 18px);
+            box-shadow: 0 24px 64px rgba(0, 0, 0, 0.35);
+        }
+
+        dialog.fiche[open] {
+            animation: ouvre 0.2s ease;
+        }
+
+        dialog.fiche::backdrop {
+            background: rgba(14, 10, 18, 0.6);
+            backdrop-filter: blur(4px);
+        }
+
+        @keyframes ouvre {
+            from { opacity: 0; transform: scale(0.96); }
+            to { opacity: 1; transform: none; }
+        }
+
+        body:has(dialog[open]) {
+            overflow: hidden;
+        }
+
+        .fiche-contenu {
+            padding: clamp(1.25rem, 4vw, 2rem);
+        }
+
+        .fiche-fermer {
+            position: absolute;
+            top: 0.75rem;
+            right: 0.75rem;
+            width: 2.25rem;
+            height: 2.25rem;
+            font-size: 1.1rem;
+            line-height: 1;
+            color: inherit;
+            background: var(--accent-soft, rgba(200, 1, 213, 0.1));
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .fiche-tete {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+            margin-bottom: 1.5rem;
+            padding-right: 2.5rem;
+        }
+
+        .fiche-tete .portrait {
+            flex-shrink: 0;
+            width: 7.5rem;
+        }
+
+        .fiche h2 {
+            margin: 0;
+            font-size: clamp(1.75rem, 5vw, 2.25rem);
+        }
+
+        .fiche h3 {
+            margin: 1.5rem 0 0.4rem;
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        .fiche p {
+            margin: 0;
+            color: var(--muted, #5d5964);
+        }
+
+        .infos {
+            display: grid;
+            grid-template-columns: max-content 1fr;
+            gap: 0.5rem 1.5rem;
+            margin: 0;
+        }
+
+        .infos dt {
+            font-weight: 500;
+            color: var(--muted, #5d5964);
+        }
+
+        .infos dd {
+            margin: 0;
+        }
+
+        .vide {
+            font-style: italic;
+            color: var(--muted, #5d5964);
+        }
+
+        /* Galerie dans la fiche */
+        .galerie {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(6.5rem, 1fr));
+            gap: 0.6rem;
+        }
+
+        .vignette {
+            aspect-ratio: 1;
+            padding: 0;
+            overflow: hidden;
+            background: none;
+            border: 1px solid var(--border, #e5e2ea);
+            border-radius: 10px;
+            cursor: zoom-in;
+            transition: border-color 0.2s ease;
+        }
+
+        .vignette:hover {
+            border-color: var(--accent, #b000bc);
+        }
+
+        .vignette img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Image agrandie */
+        dialog.visionneuse {
+            width: min(100% - 1rem, 56rem);
+            padding: 1rem;
+            color: #fff;
+            text-align: center;
+            background: #0e0a12;
+            border: none;
+            border-radius: var(--radius, 18px);
+        }
+
+        dialog.visionneuse::backdrop {
+            background: rgba(0, 0, 0, 0.8);
+        }
+
+        dialog.visionneuse img {
+            display: block;
+            max-width: 100%;
+            max-height: 62vh;
+            margin: 2rem auto 0.5rem;
+            object-fit: contain;
+            border-radius: 10px;
+        }
+
+        .vis-description {
+            max-width: 40rem;
+            margin: 0 auto 0.5rem;
+            color: #fff;
+        }
+
+        .vis-compteur {
+            margin: 0;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .vis-btn {
+            position: absolute;
+            width: 2.5rem;
+            height: 2.5rem;
+            font-size: 1.5rem;
+            line-height: 1;
+            color: #fff;
+            background: rgba(255, 255, 255, 0.18);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .vis-btn:hover {
+            background: rgba(255, 255, 255, 0.32);
+        }
+
+        .vis-fermer { top: 0.75rem; right: 0.75rem; }
+        .vis-prec, .vis-suiv { top: 50%; transform: translateY(-50%); }
+        .vis-prec { left: 0.75rem; }
+        .vis-suiv { right: 0.75rem; }
+        .visionneuse.seule .vis-prec,
+        .visionneuse.seule .vis-suiv { display: none; }
+
+        @media (prefers-reduced-motion: reduce) {
+            dialog.fiche[open] { animation: none; }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Menu déroulant -->
+    <header>
+        <div class="dropdown menu-flottant">
+            <button class="btn btn-menu dropdown-toggle" type="button" id="menuDeroulant" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <img src="../img/icon.PNG" width="24" height="24" alt=""> Menu
+            </button>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="menuDeroulant">
+                <a class="dropdown-item" href="../index.html"><i class="fas fa-home"></i> Accueil</a>
+                <a class="dropdown-item" href="Réseaux.html"><i class="fas fa-paper-plane"></i> Me contacter</a>
+                <a class="dropdown-item active" href="#"><i class="fas fa-user"></i> Personnages</a>
+                <a class="dropdown-item" href="https://discord.gg/xaQCFtC9bv" target="_blank" rel="noopener"><i class="fab fa-discord"></i> Discord</a>
+                <a class="dropdown-item" href="sponsor.html"><i class="fas fa-handshake"></i> Notre sponsor</a>
+                <a class="dropdown-item" href="projets.html"><i class="fas fa-folder-open"></i> Projets</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="https://streamelements.com/toh_ka/tip" target="_blank" rel="noopener"><i class="fas fa-coins"></i> Faire un don</a>
+                <a class="dropdown-item" href="https://github.com/Bettyaoi/bettyaoi.github.io" target="_blank" rel="noopener"><i class="fab fa-github"></i> Github du site</a>
+                <a class="dropdown-item" href="https://hexatm.com/MagiicalGirl/" target="_blank" rel="noopener"><i class="fas fa-lock"></i> Se connecter</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Contenu -->
+    <main class="page">
+        <h1>Personnages</h1>
+        <p class="intro">Clique sur une fiche pour l'afficher en grand.</p>
+
+        <div class="persos">
+            <!-- Pour ajouter un personnage : copie ce bouton ET la fiche (<dialog>) plus bas,
+                 puis change l'identifiant (data-ouvrir / id) et les textes. -->
+            <button class="perso" type="button" data-ouvrir="kage-izayoi">
+                <span class="portrait"><img src="../img/kage.jpg" alt="Portrait de Kage Izayoi"></span>
+                <span class="perso-nom">Kage Izayoi</span>
+            </button>
+            <button class="perso" type="button" data-ouvrir="vita">
+                <span class="portrait"><img src="../img/Vita.jpg" alt="Portrait de Vita"></span>
+                <span class="perso-nom">Vita, princesse du Royaume Divin </span>
+            </button>
+        </div>
+    </main>
+
+    <!-- Fiches en grand -->
+    <dialog class="fiche" id="kage-izayoi" aria-labelledby="kage-izayoi-titre">
+        <button class="fiche-fermer" type="button" aria-label="Fermer la fiche">&times;</button>
+        <div class="fiche-contenu">
+            <div class="fiche-tete">
+                <!-- Pour mettre une image : remplace la lettre par <img src="../img/kage.jpg" alt="Portrait de Kage Izayoi"> -->
+                <div class="portrait"><img src="../img/kage.jpg" alt="Portrait de Kage Izayoi"></div>
+                <h2 id="kage-izayoi-titre">Kage Izayoi</h2>
+            </div>
+
+            <dl class="infos">
+                <dt>Prénom</dt><dd>Kage</dd>
+                <dt>Nom</dt><dd>Izayoi</dd>
+                <dt>Âge</dt><dd><span class="age">17 ans</span></dd>
+                <dt>Taille</dt><dd><span class="Taille">1m70</span></dd>
+                <dt>Origine</dt><dd><span class="Origine">Vide</span></dd>
+                <dt>Occupation</dt><dd><span class="Occupation">Étudiant en seconde année à l'académie Shujin (nom à changer)</span></dd>
+            </dl>
+
+            <h3>Galerie</h3>
+            <!-- Pour ajouter une image : copie un <button class="vignette"> et change le src de l'image et data-description (le texte affiché sous l'image agrandie)
+                 (ex. ../img/kage4.jpg). -->
+            <div class="galerie">
+                <button class="vignette" type="button" aria-label="Agrandir l'image 1"><img src="../img/kage.jpg" alt="Image 1 de Kage Izayoi"></button>
+                <button class="vignette" type="button" aria-label="Agrandir l'image 2"><img src="../img/kage_splash.JPG" alt="Kage Izayoi, illustration de style splash art" data-description="Illustration inspirée des splashscreens des all-out attacks de Persona 5. Art par ノ ー チ ラ ス sur Pixiv."></button>
+                <button class="vignette" type="button" aria-label="Agrandir l'image 3"><img src="../img/kage_b&w.png" alt="Kage Izayoi, illustration en noir et blanc" data-description="Illustration en noir et blanc, dans un style manga. Art par @gaman_arts sur X."></button>
+            </div>
+
+            <h3>Caractère</h3>
+            <p class="caractère">Kage est quelqu'un de gentil mais parfois maladroit qui n'est embarassé que par peu de choses. Tout corps organique est oeuvre de la nature et est donc fait pour être vu un moment donné, selon lui. En combat, il peut se révéler être une véritable machine.</p>
+
+            <h3>Histoire</h3>
+            <p class="histoire">Adolescent en somme ordinaire même si ses aptitudes en combat et en magie sont hors du commun. Il ne porte pas d'uniforme scolaire car ceux-ci sont trop serrés pour lui et il fait peur au corps enseignant ainsi qu'à la plupart de ses camarades pour des raisons inconnues, donc il en profite. Il vit seul avec sa soeur adoptive, Tsuki, grâce à qui ils peuvent encore avoir un toit. La nuit, Kage sort et se bat contre des soldats vêtus majoritairement de blanc nommé les "guerriers angéliques". Tous, sans exception, veulent sa mort et il n'a jamais su pourquoi. Sa soeur est au courant de tout ça à l'inverse d'Aika, sa meilleure amie, qu'il veut garder le plus loin possible de tout ça. Toutefois, Aika semble éprouver des sentiments plus qu'amicaux à son égard mais ceux ci n'atteignent pas Kage qui ne s'en rend pas compte.</p>
+        </div>
+    </dialog>
+    <dialog class="fiche" id="vita" aria-labelledby="vita-titre">
+        <button class="fiche-fermer" type="button" aria-label="Fermer la fiche">&times;</button>
+        <div class="fiche-contenu">
+            <div class="fiche-tete">
+                <!-- Pour mettre une image : remplace la lettre par <img src="../img/kage.jpg" alt="Portrait de Kage Izayoi"> -->
+                <div class="portrait"><img src="../img/vita.jpg" alt="Portrait de Vita"></div>
+                <h2 id="vita-titre">Vita, princesse du Royaume Divin</h2>
+            </div>
+
+            <dl class="infos">
+                <dt>Prénom</dt><dd>Vita</dd>
+                <dt>Nom</dt><dd>Hayakawa (couverture humaine)</dd>
+                <dt>Âge</dt><dd><span class="age">18 ans (physiquement), +200 (réellement)</span></dd>
+                <dt>Taille</dt><dd><span class="Taille">1m60</span></dd>
+                <dt>Origine</dt><dd><span class="Origine">L'Harmonie</span></dd>
+                <dt>Occupation</dt><dd><span class="Occupation">Princesse du Royaume Divin</span></dd>
+            </dl>
+
+            <h3>Galerie</h3>
+            <!-- Pour ajouter une image : copie un <button class="vignette"> et change le src de l'image et data-description (le texte affiché sous l'image agrandie)
+                 (ex. ../img/kage4.jpg). -->
+            <div class="galerie">
+                <button class="vignette" type="button" aria-label="Agrandir l'image 1"><img src="../img/vita.jpg" alt="Image 1 de Vita" data-description="Illustration de Vita dans ses habits de Déesse. Art par @angrycomputer43 sur X."></button>
+            </div>
+
+            <h3>Caractère</h3>
+            <p class="caractère">Vita est une personne gentille. Trop gentille. Ne voulant pas prendre part au combat, elle souhaite quand même aider Kage du mieux qu'elle peut, même face au danger. Elle risquera sa vie pour qu'il rentre en vie. Néanmoins, derrière ce souhait de ne pas se battre, Vita cache une puissance que même sa propre mère craint.</p>
+
+            <h3>Histoire</h3>
+            <p class="histoire">Vita était pendant une longue période une marionette à la merci de Jun, capuchée et visage caché comme tous les anges et dieux que Kage avait croisé jusqu'ici. Elle possède désormais une identité et un visage et est désormais émerveillée par une liberté à laquelle elle n'a jamais eu le droit. Elle peut faire ce qu'elle veux quand elle le veut ce qui est impensable pour quelqu'un ayant vécu comme une marionette jusqu'ici. Elle a du mal à s'acoutumer à la vie humaine et à faire confiance à Kage, persuadée, même après qu'il l'ait sauvée, qu'il est un démon alors qu'il ne comprend toujours pas pourquoi on lui dit ça. Ses doutes se dissiperont peu à peu et elle lui fera entièrement confiance, peut-être même trop... Après son arrivée sur Terre, elle est encore trop naïve et a bien failli subir des choses pas agréables. Pour le moment, elle reste sur le banc en ce qui concerne les combats et sert parfois de support à Kage, persuadée qu'il va se tuer, elle veut pouvoir guérir chacunes de ses blessures.</p>
+        </div>
+    </dialog>
+
+    <!-- Image agrandie (partagée par toutes les galeries) -->
+    <dialog class="visionneuse" id="visionneuse" aria-label="Galerie d'images">
+        <button class="vis-btn vis-fermer" type="button" aria-label="Fermer l'image">&times;</button>
+        <button class="vis-btn vis-prec" type="button" aria-label="Image précédente">&#8249;</button>
+        <img alt="">
+        <button class="vis-btn vis-suiv" type="button" aria-label="Image suivante">&#8250;</button>
+        <p class="vis-description" hidden></p>
+        <p class="vis-compteur" aria-live="polite"></p>
+    </dialog>
+
+    <!-- Scripts (Bootstrap pour le menu déroulant) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    <script>
+        // Ouvre la fiche liée au bouton cliqué
+        document.querySelectorAll('[data-ouvrir]').forEach(function (bouton) {
+            bouton.addEventListener('click', function () {
+                document.getElementById(bouton.dataset.ouvrir).showModal();
+            });
+        });
+
+        // Ferme avec la croix ou en cliquant en dehors de la fiche (Échap fonctionne déjà)
+        document.querySelectorAll('dialog.fiche').forEach(function (fiche) {
+            fiche.querySelector('.fiche-fermer').addEventListener('click', function () { fiche.close(); });
+            fiche.addEventListener('click', function (e) { if (e.target === fiche) fiche.close(); });
+        });
+
+        // Galerie : agrandit l'image cliquée, flèches pour naviguer
+        var visionneuse = document.getElementById('visionneuse');
+        var grande = visionneuse.querySelector('img');
+        var compteur = visionneuse.querySelector('.vis-compteur');
+        var description = visionneuse.querySelector('.vis-description');
+        var images = [];
+        var courant = 0;
+
+        function afficher(i) {
+            courant = (i + images.length) % images.length;
+            var source = images[courant];
+            grande.src = source.dataset.grand || source.src;
+            grande.alt = source.alt;
+            description.textContent = source.dataset.description || '';
+            description.hidden = !source.dataset.description;
+            compteur.textContent = (courant + 1) + ' / ' + images.length;
+        }
+
+        document.querySelectorAll('.galerie').forEach(function (galerie) {
+            var liste = Array.from(galerie.querySelectorAll('img'));
+            liste.forEach(function (img, i) {
+                img.closest('button').addEventListener('click', function () {
+                    images = liste;
+                    visionneuse.classList.toggle('seule', liste.length < 2);
+                    afficher(i);
+                    visionneuse.showModal();
+                });
+            });
+        });
+
+        visionneuse.querySelector('.vis-prec').addEventListener('click', function () { afficher(courant - 1); });
+        visionneuse.querySelector('.vis-suiv').addEventListener('click', function () { afficher(courant + 1); });
+        visionneuse.querySelector('.vis-fermer').addEventListener('click', function () { visionneuse.close(); });
+        visionneuse.addEventListener('click', function (e) { if (e.target === visionneuse) visionneuse.close(); });
+        visionneuse.addEventListener('keydown', function (e) {
+            if (e.key === 'ArrowLeft') afficher(courant - 1);
+            if (e.key === 'ArrowRight') afficher(courant + 1);
+        });
+    </script>
+</body>
+
+</html>
