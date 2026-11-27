@@ -244,10 +244,22 @@ section:has(> .jem) {
 
 .profil img {
   flex-shrink: 0;
-  width: 72px;
-  height: 72px;
+}
+
+/* Contact : petits logos, sans recadrage */
+.profil.logo img {
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
+  border-radius: 12px;
+}
+
+/* Mutus : photos de profil rondes */
+.profil.avatar img {
+  width: 64px;
+  height: 64px;
   object-fit: cover;
-  border-radius: 16px;
+  border-radius: 50%;
 }
 
 .profil h2 {
